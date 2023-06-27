@@ -1,19 +1,7 @@
 #!/usr/bin/env bash
-
-# Update package lists
-sudo apt-get update
-
-# Install nginx
-sudo apt-get install -y nginx
-
-#Install Nginx HTTP
-sudo ufw "Nginx HTTP"
-
-echo "Hello world!" | sudo tee /var/www/html/index.html
-
-# Nginx Test
-sudo nginx -t
-
-# Restart nginx
-service nginx restart
-
+# Installs nginx server
+apt-get update
+apt-get -y install nginx
+ufw allow 'Nginx HTTP'
+echo "Hello World!" > /var/www/html/index.html
+service nginx start
