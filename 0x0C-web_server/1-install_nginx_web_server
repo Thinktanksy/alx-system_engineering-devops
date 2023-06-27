@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# Update package lists
+sudo apt-get update
+
+# Install nginx
+sudo apt-get install -y nginx
+
+#Install Nginx HTTP
+sudo ufw "Nginx HTTP"
+
+# Ensure nginx is listening on port 80
+
+echo "Hello world!" | sudo tee /var/www/html/index.html
+
+# Nginx Test
+sudo nginx -t
+
+# Restart nginx
+service nginx restart
