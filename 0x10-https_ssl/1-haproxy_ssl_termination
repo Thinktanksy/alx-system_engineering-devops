@@ -13,7 +13,7 @@ global
 	crt-base /etc/ssl/private
 
 	# See: https://ssl-config.mozilla.org/#server=haproxy&server-version=2.0.3&config=intermediate
-        ssl-default-bind-ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-	GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-	AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384
+        ssl-default-bind-ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384
         ssl-default-bind-ciphersuites TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256
         ssl-default-bind-options ssl-min-ver TLSv1.2 no-tls-tickets
 
@@ -35,15 +35,15 @@ defaults
 	errorfile 504 /etc/haproxy/errors/504.http
 
 frontend 201846-web
-    	bind *:80
-    	bind *:443 ssl crt /etc/ssl/www.dynamixsystems.tech/www.dynamixsystems.tech.pem
+        bind *:80
+        bind *:443 ssl crt /etc/ssl/www.dynamixsystems.tech/www.dynamixsystems.tech.pem
 
-    	# Redirect if HTTPS is not used
-    	redirect scheme https code 301 if !{ ssl_fc }
+        # Redirect if HTTPS is not used
+        redirect scheme https code 301 if !{ ssl_fc }
 
-    	default_backend 201846-web_servers
+        default_backend 201846-web_backend
 
-backend 201846-web_servers
-    	balance roundrobin
-    	server web-01 18.209.179.155:80 check
-    	server web-02 54.160.66.40:80 check
+backend 201846-web_backend
+        balance roundrobin
+        server 201846-web-01 18.209.179.155:80 check
+        server 201846-web-02 54.160.66.40:80 check
